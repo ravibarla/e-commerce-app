@@ -7,7 +7,10 @@ export default class ProductController {
     res.status(200).send(products);
     next();
   }
-  addProduct(req, res) {}
+  addProduct(req, res) {
+    console.log(req.body);
+    res.status(200).send("inside add product");
+  }
   rateProduct(req, res) {}
   getOneProduct(req, res) {}
 }
