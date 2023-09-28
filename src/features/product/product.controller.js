@@ -7,10 +7,26 @@ export default class ProductController {
     res.status(200).send(products);
     next();
   }
+
   addProduct(req, res) {
-    console.log(req.body);
-    res.status(200).send("inside add product");
+    const { name, price, sizes } = req.body;
+    const newProduct = {
+      name,
+      price: parseFloat(price),
+      sizes: sizes.split(","),
+      imageUrl: req.file.filename,
+    };
+    const recordCreated = ProductModel.add(newProduct);
+    res.status(201).send(recordCreated);
   }
   rateProduct(req, res) {}
-  getOneProduct(req, res) {}
+  getOneProduct(req, res) {
+    const id = req.params.id;
+    const product = ProductModel.get(id);
+    if (!product) {
+      return res.status(404).send("product not foound");
+    } else {
+      return res.status(200).send(product);
+    }
+  }
 }
