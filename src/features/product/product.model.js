@@ -33,7 +33,7 @@ export default class ProductModel {
   }
 }
 
-var products = [
+let products = [
   new ProductModel(
     1,
     "Product 1",
