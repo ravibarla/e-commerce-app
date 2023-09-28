@@ -1,11 +1,19 @@
 {
   "name": "e-commerce-app",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "APIs for e-commerce-app",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "test": " "
+=======
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+>>>>>>> 08dad8ae65ca9f1f1637132156a83e5a1aaa6891
   },
   "repository": {
     "type": "git",
@@ -18,6 +26,10 @@
   },
   "homepage": "https://github.com/ravibarla/e-commerce-app#readme",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "body-parser": "^1.20.2",
+>>>>>>> 08dad8ae65ca9f1f1637132156a83e5a1aaa6891
     "express": "^4.18.2"
   }
 }
