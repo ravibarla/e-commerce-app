@@ -11,6 +11,7 @@ server.use("/api/products", productRouter);
 
 //3. default request handler
 server.get("/", (req, res) => {
+ 
   res.send("welcome to express");
 });
 

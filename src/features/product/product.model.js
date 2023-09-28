@@ -1,5 +1,5 @@
 export default class ProductModel {
-  constructor(id, name, desc, imageUrl, cat, price, sizes) {
+  constructor(id, name, desc, price, imageUrl, cat, sizes) {
     (this.id = id),
       (this.name = name),
       (this.desc = desc),
@@ -20,6 +20,16 @@ export default class ProductModel {
   }
   static GetAll() {
     return products;
+  }
+  static filter(minPrice, maxPrice, category) {
+    const result = products.filter((product) => {
+      return (
+        product.price >= minPrice &&
+        product.price <= maxPrice &&
+        product.cat == category
+      );
+    });
+    return result;
   }
 }
 
