@@ -34,7 +34,7 @@ export default class ProductModel {
   }
   static rateProduct(userId, productId, rating) {
     //1. validate user id
-    console.log("users :", UserModel.getAllUsers());
+
     const user = UserModel.getAllUsers().find((user) => user.id == userId);
     if (!user) {
       return "user not found";
