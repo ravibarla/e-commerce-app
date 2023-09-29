@@ -21,7 +21,17 @@ export default class ProductController {
     const recordCreated = ProductModel.add(newProduct);
     res.status(201).send(recordCreated);
   }
-  rateProduct(req, res) {}
+  rateProduct(req, res) {
+    const userId = req.query.userId;
+    const productId = req.query.productId;
+    const rating = req.query.rating;
+    const error = ProductModel.rateProduct(userId, productId, rating);
+    if (error) {
+      return res.status(400).send(err);
+    } else {
+      return res.status(200).send("rating successfully done");
+    }
+  }
   getOneProduct(req, res) {
     const id = req.params.id;
     const product = ProductModel.get(id);

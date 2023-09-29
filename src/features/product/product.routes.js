@@ -16,6 +16,7 @@ productRouter.post(
   productController.addProduct
 );
 
+productRouter.post("/rate", productController.rateProduct);
 productRouter.get("/filter", productController.filterProducts);
 productRouter.get("/", productController.getAllProducts);
 productRouter.get("/:id", productController.getOneProduct);
