@@ -15,9 +15,24 @@ const server = express();
 server.use("/api-docs", swagger.serve, swagger.setup(apiDocs));
 server.use(bodyParser.json());
 server.use(express.json());
+
+//CORS policy configuration
+server.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500"); //"http://127.0.0.1:5500"
+  res.header("Access-Control-Allow-Headers", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+
+  //return ok for preflight request
+  if (req.method == "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 //for all request related to product, redirect to product routes
 // server.use("/api/products", basicAuthorizer, productRouter);
-server.use("/api/products", jwtAuth, productRouter);
+// server.use("/api/products", jwtAuth, productRouter);
+server.use("/api/products", productRouter);
 server.use("/api/users", userRouter);
 server.use("/api/cartItems", jwtAuth, cartRouter);
 //middleware to handle 404
