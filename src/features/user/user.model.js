@@ -13,7 +13,9 @@ export class UserModel {
     return newUser;
   }
   static signIn(email, password) {
-    const user = users.find((user) => user.email && user.password);
+    const user = users.find(
+      (user) => user.email == email && user.password == password
+    );
     return user;
   }
   static getAllUsers() {
