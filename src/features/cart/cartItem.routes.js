@@ -9,6 +9,7 @@ const cartRouter = express.Router();
 //all the path to  controller
 //localhost/api/carts
 const cartItemController = new CartItemController();
+cartRouter.delete("/:id", cartItemController.delete);
 cartRouter.post("/add", cartItemController.add);
 cartRouter.get("/", cartItemController.get);
 
