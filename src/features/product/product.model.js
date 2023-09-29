@@ -1,5 +1,5 @@
 export default class ProductModel {
-  constructor(id, name, desc, imageUrl, cat, price, sizes) {
+  constructor(id, name, desc, price, imageUrl, cat, sizes) {
     (this.id = id),
       (this.name = name),
       (this.desc = desc),
@@ -8,12 +8,32 @@ export default class ProductModel {
       (this.cat = cat),
       (this.sizes = sizes);
   }
+  static add(product) {
+    product.id = products.length + 1;
+    products.push(product);
+    return product;
+  }
+
+  static get(id) {
+    const product = products.find((i) => i.id == id);
+    return product;
+  }
   static GetAll() {
     return products;
   }
+  static filter(minPrice, maxPrice, category) {
+    const result = products.filter((product) => {
+      return (
+        (!minPrice || product.price >= minPrice) &&
+        (!maxPrice || product.price <= maxPrice) &&
+        (!category || product.cat == category)
+      );
+    });
+    return result;
+  }
 }
 
-var products = [
+let products = [
   new ProductModel(
     1,
     "Product 1",
