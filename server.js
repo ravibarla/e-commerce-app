@@ -5,11 +5,10 @@ import productRouter from "./src/features/product/product.routes.js";
 import userRouter from "./src/features/user/user.routes.js";
 import bodyParser from "body-parser";
 
-
 // import basicAuthorizer from "./src/middlewares/basicAuth.middleware.js";
 import jwtAuth from "./src/middlewares/jwt.middleware.js";
 import cartRouter from "./src/features/cart/cartItem.routes.js";
-import apiDocs from "./swagger.json" assert {type:"json"};
+import apiDocs from "./swagger.json" assert { type: "json" };
 //2. create server
 const server = express();
 
@@ -21,6 +20,14 @@ server.use(express.json());
 server.use("/api/products", jwtAuth, productRouter);
 server.use("/api/users", userRouter);
 server.use("/api/cartItems", jwtAuth, cartRouter);
+//middleware to handle 404
+server.use((req, res) => {
+  return res
+    .status(404)
+    .send(
+      "API not found. please checkout our documentation for more information at localhost:3200/api-docs"
+    );
+});
 
 //3. default request handler
 server.get("/", (req, res) => {
