@@ -10,6 +10,7 @@ import jwtAuth from "./src/middlewares/jwt.middleware.js";
 import cartRouter from "./src/features/cart/cartItem.routes.js";
 import apiDocs from "./swagger.json" assert { type: "json" };
 import cors from "cors";
+import loggerMiddleware from "./src/middlewares/logger.middleware.js";
 //2. create server
 const server = express();
 
@@ -37,8 +38,10 @@ server.use(cors(corsOptions));
 //for all request related to product, redirect to product routes
 // server.use("/api/products", basicAuthorizer, productRouter);
 // server.use("/api/products", jwtAuth, productRouter);
+server.use(loggerMiddleware);
 server.use("/api/products", productRouter);
 server.use("/api/users", userRouter);
+
 server.use("/api/cartItems", jwtAuth, cartRouter);
 //middleware to handle 404
 server.use((req, res) => {
