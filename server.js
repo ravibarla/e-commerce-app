@@ -39,7 +39,7 @@ server.use(cors(corsOptions));
 // server.use("/api/products", basicAuthorizer, productRouter);
 // server.use("/api/products", jwtAuth, productRouter);
 server.use(loggerMiddleware);
-server.use("/api/products", productRouter);
+server.use("/api/products", loggerMiddleware, productRouter);
 server.use("/api/users", userRouter);
 
 server.use("/api/cartItems", jwtAuth, cartRouter);
