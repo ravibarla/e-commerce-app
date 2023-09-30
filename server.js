@@ -12,6 +12,7 @@ import apiDocs from "./swagger.json" assert { type: "json" };
 import cors from "cors";
 import loggerMiddleware from "./src/middlewares/logger.middleware.js";
 import { ApplicationError } from "./src/error-handler/application.error.js";
+import connectToMongodb from "./src/config/mongodb.js";
 //2. create server
 const server = express();
 
@@ -71,4 +72,7 @@ server.get("/", (req, res) => {
 
 //4. create port
 const PORT = 3200;
-server.listen(PORT, () => console.log("app running in port ", PORT));
+server.listen(PORT, () => {
+  console.log("app running in port ", PORT);
+  connectToMongodb();
+});
