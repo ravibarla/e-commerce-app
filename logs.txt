@@ -30,3 +30,15 @@
 {"level":"info","message":"/rate?userId=1&productId=100&rating=2-{}"}
 {"level":"info","message":"/api/products/rate?userId=1&productId=100&rating=2-{}"}
 {"level":"info","message":"/rate?userId=1&productId=100&rating=2-{}"}
+{"level":"info","message":"/api/products/rate?userId=1&productId=100&rating=2-{}"}
+{"level":"info","message":"/rate?userId=1&productId=100&rating=2-{}"}
+{"level":"info","message":"/api/products/rate?userId=1&productId=100&rating=2-{}"}
+{"level":"info","message":"/rate?userId=1&productId=100&rating=2-{}"}
+{"level":"info","message":"/api/products/rate?userId=1&productId=100&rating=2-{}"}
+{"level":"info","message":"/rate?userId=1&productId=100&rating=2-{}"}
+{"level":"info","message":"/api/products/rate?userId=100&productId=1&rating=2-{}"}
+{"level":"info","message":"/rate?userId=100&productId=1&rating=2-{}"}
+{"level":"info","message":"/api/products/rate?userId=100&productId=1&rating=2-{}"}
+{"level":"info","message":"/rate?userId=100&productId=1&rating=2-{}"}
+{"level":"info","message":"/api/products/rate?userId=1&productId=1&rating=2-{}"}
+{"level":"info","message":"/rate?userId=1&productId=1&rating=2-{}"}

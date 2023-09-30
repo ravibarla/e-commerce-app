@@ -52,6 +52,13 @@ server.use((req, res) => {
     );
 });
 
+//error handler middleware
+
+server.use((err, req, res, next) => {
+  console.log(err);
+  res.status(503).send("something went wrong please try later");
+});
+
 //3. default request handler
 server.get("/", (req, res) => {
   res.send("welcome to express");
