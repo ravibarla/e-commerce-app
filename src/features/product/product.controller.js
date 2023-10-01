@@ -1,25 +1,38 @@
 import ProductModel from "./product.model.js";
+import ProductRepository from "./product.repository.js";
 
 export default class ProductController {
-  getAllProducts(req, res, next) {
-    const products = ProductModel.GetAll();
-    // console.log("products :", products);
-    res.status(200).send(products);
-    next();
+  constructor() {
+    this.productRepository = new ProductRepository();
+  }
+  async getAllProducts(req, res) {
+    try {
+      const products = await this.productRepository.getAll();
+      res.status(200).send(products);
+    } catch (err) {
+      console.log(err);
+      res.status(200).send("something went wrong ");
+    }
   }
 
-  addProduct(req, res) {
-    const { name, desc, price, cat, sizes } = req.body;
-    const newProduct = {
-      name,
-      desc,
-      price: parseFloat(price),
-      imageUrl: req.file.filename,
-      cat,
-      sizes: sizes.split(","),
-    };
-    const recordCreated = ProductModel.add(newProduct);
-    res.status(201).send(recordCreated);
+  async addProduct(req, res) {
+    try {
+      const { name, desc, price, cat, sizes } = req.body;
+      const newProduct = new ProductModel(
+        name,
+        desc,
+        parseFloat(price),
+        req.file.filename,
+        cat,
+        sizes.split(",")
+      );
+
+      const recordCreated = await this.productRepository.add(newProduct);
+      res.status(201).send(recordCreated);
+    } catch (err) {
+      console.log(err);
+      res.status(200).send("something went wrong ");
+    }
   }
   rateProduct(req, res, next) {
     try {
@@ -51,13 +64,18 @@ export default class ProductController {
     // //   return res.status(200).send("rating successfully done");
     // // }
   }
-  getOneProduct(req, res) {
-    const id = req.params.id;
-    const product = ProductModel.get(id);
-    if (!product) {
-      return res.status(404).send("product not foound");
-    } else {
-      return res.status(200).send(product);
+  async getOneProduct(req, res) {
+    try {
+      const id = req.params.id;
+      const product =await this.productRepository.get(id);
+      if (!product) {
+        return res.status(404).send("product not foound");
+      } else {
+        return res.status(200).send(product);
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(200).send("something went wrong ");
     }
   }
 

@@ -10,16 +10,18 @@ const productRouter = express.Router();
 //all the path to  controller
 //localhost/api/products
 const productController = new ProductController();
-productRouter.post(
-  "/",
-  upload.single("imageUrl"),
-  productController.addProduct
-);
+productRouter.post("/", upload.single("imageUrl"), (req, res) => {
+  productController.addProduct(req, res);
+});
 
 productRouter.post("/rate", productController.rateProduct);
 productRouter.get("/filter", productController.filterProducts);
-productRouter.get("/", productController.getAllProducts);
-productRouter.get("/:id", productController.getOneProduct);
+productRouter.get("/", (req, res) => {
+  productController.getAllProducts(req, res);
+});
+productRouter.get("/:id", (req, res) => {
+  productController.getOneProduct(req, res);
+});
 
 // localhost:3200/api/products/filter?minPrice=10&maxPrice=10&&category
 
