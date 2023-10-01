@@ -1,3 +1,4 @@
+import { ApplicationError } from "../../error-handler/application.error.js";
 import ProductModel from "./product.model.js";
 import ProductRepository from "./product.repository.js";
 
@@ -67,7 +68,7 @@ export default class ProductController {
   async getOneProduct(req, res) {
     try {
       const id = req.params.id;
-      const product =await this.productRepository.get(id);
+      const product = await this.productRepository.get(id);
       if (!product) {
         return res.status(404).send("product not foound");
       } else {
@@ -79,11 +80,20 @@ export default class ProductController {
     }
   }
 
-  filterProducts(req, res) {
-    const minPrice = req.query.minPrice;
-    const maxPrice = req.query.maxPrice;
-    const category = req.query.category;
-    const result = ProductModel.filter(minPrice, maxPrice, category);
-    res.status(200).send(result);
+  async filterProducts(req, res) {
+    try {
+      const minPrice = req.query.minPrice;
+      const maxPrice = req.query.maxPrice;
+      const category = req.query.category;
+      const result = await this.productRepository.filter(
+        minPrice,
+        maxPrice,
+        category
+      );
+      res.status(200).send(result);
+    } catch (err) {
+      console.log(err);
+      res.status(200).send("something went wrong ");
+    }
   }
 }

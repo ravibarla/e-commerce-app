@@ -15,7 +15,9 @@ productRouter.post("/", upload.single("imageUrl"), (req, res) => {
 });
 
 productRouter.post("/rate", productController.rateProduct);
-productRouter.get("/filter", productController.filterProducts);
+productRouter.get("/filter", (req, res) => {
+  productController.filterProducts(req, res);
+});
 productRouter.get("/", (req, res) => {
   productController.getAllProducts(req, res);
 });

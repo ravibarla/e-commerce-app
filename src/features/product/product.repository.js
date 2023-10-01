@@ -15,7 +15,10 @@ export default class ProductRepository {
       return newProduct;
     } catch (err) {
       console.log(err);
-      throw new ApplicationError("something went wrong with the ", 500);
+      throw new ApplicationError(
+        "something went wrong with the database ",
+        500
+      );
     }
   }
   async getAll() {
@@ -26,7 +29,10 @@ export default class ProductRepository {
       return products;
     } catch (err) {
       console.log(err);
-      throw new ApplicationError("something went wrong with the ", 500);
+      throw new ApplicationError(
+        "something went wrong with the database ",
+        500
+      );
     }
   }
   async get(id) {
@@ -35,10 +41,44 @@ export default class ProductRepository {
       const db = getDB();
       const collection = db.collection(this.collection);
       const product = await collection.find({ _id: productId }).toArray();
-      return product[0]
+      return product[0];
     } catch (err) {
       console.log(err);
-      throw new ApplicationError("something went wrong with the ", 500);
+      throw new ApplicationError(
+        "something went wrong with the database ",
+        500
+      );
     }
+  }
+  async filter(minPrice, maxPrice, category) {
+    try {
+      const db = getDB();
+      const collection = db.collection(this.collection);
+      let filterExpression = {};
+      if (minPrice) {
+        filterExpression.price = { $gte: parseFloat(minPrice) };
+      }
+      if (maxPrice) {
+        filterExpression.price = {
+          ...filterExpression.price,
+          $lte: parseFloat(maxPrice),
+        };
+      }
+      if (category) {
+        filterExpression.category = category;
+      }
+      return await collection.find(filterExpression).toArray();
+    } catch (err) {
+      console.log(err);
+      throw new ApplicationError("something went wrong with the database");
+    }
+    // const result = products.filter((product) => {
+    //   return (
+    //     (!minPrice || product.price >= minPrice) &&
+    //     (!maxPrice || product.price <= maxPrice) &&
+    //     (!category || product.cat == category)
+    //   );
+    // });
+    // return result;
   }
 }
