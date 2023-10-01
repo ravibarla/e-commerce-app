@@ -1,12 +1,15 @@
 import { ApplicationError } from "../../error-handler/application.error.js";
 import { getDB } from "../../config/mongodb.js";
 export default class UserRepository {
+  constructor() {
+    this.collection = "users";
+  }
   async signUp(newUser) {
     try {
       //1. get the database
       const db = getDB();
       //2. get the collections
-      const collection = db.collection("users");
+      const collection = db.collection(this.collection);
 
       //3. insert a document
       await collection.insertOne(newUser);
@@ -20,9 +23,8 @@ export default class UserRepository {
     try {
       //1. get the database
       const db = getDB();
-      //2. get the collections
-      const collection = db.collection("users");
-
+      //2. get collection
+      const collection = db.collection(this.collection);
       //3. find a document
       return await collection.findOne({ email });
     } catch (err) {
