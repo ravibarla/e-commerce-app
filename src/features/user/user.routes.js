@@ -9,9 +9,13 @@ const userRouter = express.Router();
 //all the path to  controller
 //localhost/api/products
 const userController = new UserController();
-userRouter.post("/signup", userController.signUp);
+userRouter.post("/signup", (req, res) => {
+  userController.signUp(req, res);
+});
 
-userRouter.post("/signin", userController.signIn);
+userRouter.post("/signin", (req, res) => {
+  userController.signIn(req, res);
+});
 // localhost:3200/api/products/filter?minPrice=10&maxPrice=10&&category
 
 export default userRouter;
