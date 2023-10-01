@@ -1,6 +1,11 @@
+import "./env.js"
+
 //1.import express
+
 import express from "express";
 import swagger from "swagger-ui-express";
+
+
 import productRouter from "./src/features/product/product.routes.js";
 import userRouter from "./src/features/user/user.routes.js";
 import bodyParser from "body-parser";
@@ -13,8 +18,10 @@ import cors from "cors";
 import loggerMiddleware from "./src/middlewares/logger.middleware.js";
 import { ApplicationError } from "./src/error-handler/application.error.js";
 import { connectToMongodb } from "./src/config/mongodb.js";
+
 //2. create server
 const server = express();
+
 
 server.use("/api-docs", swagger.serve, swagger.setup(apiDocs));
 server.use(bodyParser.json());
