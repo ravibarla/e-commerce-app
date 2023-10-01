@@ -70,15 +70,29 @@ export default class ProductRepository {
       return await collection.find(filterExpression).toArray();
     } catch (err) {
       console.log(err);
-      throw new ApplicationError("something went wrong with the database");
+      throw new ApplicationError("something went wrong with the database", 500);
     }
-    // const result = products.filter((product) => {
-    //   return (
-    //     (!minPrice || product.price >= minPrice) &&
-    //     (!maxPrice || product.price <= maxPrice) &&
-    //     (!category || product.cat == category)
-    //   );
-    // });
-    // return result;
+  }
+  async rateProduct(userId, productId, rating) {
+    try {
+      const db = getDB();
+      const collection = db.collection(this.collection);
+      await collection.updateOne(
+        {
+          _id: new ObjectId(productId),
+        },
+        {
+          $push: {
+            ratings: {
+              userId: new ObjectId(userId),
+              rating,
+            },
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+      throw new ApplicationError("something went wrong with the database", 500);
+    }
   }
 }

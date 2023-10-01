@@ -4,6 +4,7 @@
 import express from "express";
 import ProductController from "./product.controller.js";
 import upload from "../../middlewares/fileUpload.middleware.js";
+import jwtAuth from "../../middlewares/jwt.middleware.js";
 //2. initialise express router
 const productRouter = express.Router();
 
@@ -14,7 +15,9 @@ productRouter.post("/", upload.single("imageUrl"), (req, res) => {
   productController.addProduct(req, res);
 });
 
-productRouter.post("/rate", productController.rateProduct);
+productRouter.post("/rate", (req, res) => {
+  productController.rateProduct(req, res);
+});
 productRouter.get("/filter", (req, res) => {
   productController.filterProducts(req, res);
 });

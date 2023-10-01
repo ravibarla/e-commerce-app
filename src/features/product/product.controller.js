@@ -35,17 +35,18 @@ export default class ProductController {
       res.status(200).send("something went wrong ");
     }
   }
-  rateProduct(req, res, next) {
+  async rateProduct(req, res) {
     try {
+      // const userId = req.userId;
       const userId = req.query.userId;
+
       const productId = req.query.productId;
       const rating = req.query.rating;
+      await this.productRepository.rateProduct(userId, productId, rating);
 
-      ProductModel.rateProduct(userId, productId, rating);
-      return res.status(200).send("rating successfully done");
+      res.status(200).send("rating successfully done");
     } catch (err) {
       console.log("passing error to middleware");
-      next(err);
     }
 
     // const userId = req.query.userId;
