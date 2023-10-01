@@ -12,7 +12,7 @@ import apiDocs from "./swagger.json" assert { type: "json" };
 import cors from "cors";
 import loggerMiddleware from "./src/middlewares/logger.middleware.js";
 import { ApplicationError } from "./src/error-handler/application.error.js";
-import connectToMongodb from "./src/config/mongodb.js";
+import { connectToMongodb } from "./src/config/mongodb.js";
 //2. create server
 const server = express();
 
