@@ -12,20 +12,23 @@ export default class CartItemsRepository {
       //find the documente
       //either insert
       //or update
-      await collection.update(
-        {
-          productId: new ObjectId(productId),
-          userId: new ObjectId(userId),
-        },
-        {
-          $inc: {
-            quantity: quantity,
-          },
-        },
-        {
-          upsert: true,
-        }
-      );
+      // await collection.updateOne(
+      //   {
+      //     productId: new ObjectId(productId),
+      //     userId: new ObjectId(userId),
+      //   },
+      //   {
+      //     $inc: {
+      //       quantity: quantity,
+      //     },
+      //   },
+      //   {
+      //     upsert: true,
+      //   }
+      // );
+      await collection.updateOne(
+        {  productId: new ObjectId(productId),userId: new ObjectId(userId),},{$inc:{quantity:quantity}},{upsert:true}
+      )
     } catch (err) {
       console.log(err);
       throw new ApplicationError("Something went wrong with database", 500);
