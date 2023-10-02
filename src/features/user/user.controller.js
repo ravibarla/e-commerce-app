@@ -30,10 +30,11 @@ export default class UserController {
         if (result) {
           //1. create jwt token
           const token = jwt.sign(
-            { userId: result.id, email: result.email },
+            { userId: user._id, email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
           );
+          console.log("token :", token);
           //2. send jwt token
           res.status(200).send(token);
         } else {

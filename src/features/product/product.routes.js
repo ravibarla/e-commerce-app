@@ -15,7 +15,7 @@ productRouter.post("/", upload.single("imageUrl"), (req, res) => {
   productController.addProduct(req, res);
 });
 
-productRouter.post("/rate", (req, res) => {
+productRouter.post("/rate", jwtAuth, (req, res) => {
   productController.rateProduct(req, res);
 });
 productRouter.get("/filter", (req, res) => {
