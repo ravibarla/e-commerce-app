@@ -77,16 +77,29 @@ export default class ProductRepository {
     try {
       const db = getDB();
       const collection = db.collection(this.collection);
+
+      // if exist then remove the existing entry
+      await collection.updateOne(
+        {
+          _id: new ObjectId(productId),
+        },
+        {
+          $pull: {
+            ratings: {
+              userId: new ObjectId(userId),
+            },
+          },
+        }
+      );
+      // or add a new entry
+
       await collection.updateOne(
         {
           _id: new ObjectId(productId),
         },
         {
           $push: {
-            ratings: {
-              userId: new ObjectId(userId),
-              rating,
-            },
+            ratings: { userId: new ObjectId(userId), rating },
           },
         }
       );
