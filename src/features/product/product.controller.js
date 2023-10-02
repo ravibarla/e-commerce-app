@@ -38,8 +38,6 @@ export default class ProductController {
   async rateProduct(req, res) {
     try {
       const userId = req.userId;
-      // console.log("userId :", req.userId);
-      // const userId = req.body.userId;
       const productId = req.body.productId;
       const rating = req.body.rating;
       await this.productRepository.rateProduct(userId, productId, rating);
