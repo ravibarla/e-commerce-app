@@ -1,6 +1,13 @@
+import { ApplicationError } from "../../error-handler/application.error.js";
+import { UserModel } from "../user/user.model.js";
 export default class ProductModel {
+<<<<<<< HEAD
   constructor(id, name, desc, price, imageUrl, cat, sizes) {
     (this.id = id),
+=======
+  constructor(name, desc, price, imageUrl, cat, sizes, id) {
+    (this._id = id),
+>>>>>>> 097a3dab6613f52de9d82cff2c0806c816872ea9
       (this.name = name),
       (this.desc = desc),
       (this.price = price),
@@ -9,7 +16,11 @@ export default class ProductModel {
       (this.sizes = sizes);
   }
   static add(product) {
+<<<<<<< HEAD
     product.id = product.length + 1;
+=======
+    product.id = products.length + 1;
+>>>>>>> 097a3dab6613f52de9d82cff2c0806c816872ea9
     products.push(product);
     return product;
   }
@@ -31,6 +42,42 @@ export default class ProductModel {
     });
     return result;
   }
+<<<<<<< HEAD
+=======
+  static rateProduct(userId, productId, rating) {
+    //1. validate user id
+
+    const user = UserModel.getAllUsers().find((user) => user.id == userId);
+    if (!user) {
+      throw new ApplicationError("user not found", 404);
+    }
+    //2. validate product id
+    const product = products.find((product) => product.id == productId);
+    if (!product) {
+      throw new ApplicationError("product not found", 400);
+    }
+    //3. validate ratings
+    if (!product.ratings) {
+      product.ratings = [];
+      product.ratings.push({ userId, rating });
+    } else {
+      //check if user rating is already available
+      const existingRatingIndex = product.ratings.findIndex(
+        (rating) => rating.userId == userId
+      );
+      if (existingRatingIndex >= 0) {
+        product.ratings[existingRatingIndex] = {
+          userId,
+          rating,
+        };
+      } else {
+        //if no existing rating then add new rating
+        product.ratings = [];
+        product.ratings.push({ userId, rating });
+      }
+    }
+  }
+>>>>>>> 097a3dab6613f52de9d82cff2c0806c816872ea9
 }
 
 let products = [
