@@ -50,22 +50,19 @@ export default class ProductRepository {
       );
     }
   }
-  async filter(minPrice, maxPrice, category) {
+  //product should have minimum price and specefic category
+  async filter(minPrice, category) {
     try {
       const db = getDB();
       const collection = db.collection(this.collection);
       let filterExpression = {};
       if (minPrice) {
-        filterExpression.price = { $gte: parseFloat(minPrice) };
+         filterExpression.price = { $gte: parseFloat(minPrice) };
       }
-      if (maxPrice) {
-        filterExpression.price = {
-          ...filterExpression.price,
-          $lte: parseFloat(maxPrice),
-        };
-      }
+
       if (category) {
-        filterExpression.category = category;
+         filterExpression = { $and: [{ cat: category }, ] };
+        // filterExpression.category = category;
       }
       return await collection.find(filterExpression).toArray();
     } catch (err) {
