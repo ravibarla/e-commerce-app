@@ -69,7 +69,7 @@ export default class ProductRepository {
       }
       return await collection
         .find(filterExpression)
-        .project({ name: 1, price: 1 ,_id:0,ratings:{$slice:3}})
+        .project({ name: 1, price: 1, _id: 0, ratings: { $slice: 3 } })
         .toArray();
     } catch (err) {
       console.log(err);
@@ -106,6 +106,24 @@ export default class ProductRepository {
           },
         }
       );
+    } catch (err) {
+      console.log(err);
+      throw new ApplicationError("something went wrong with the database", 500);
+    }
+  }
+
+  async averageProductPricePerCategory() {
+    try {
+      const db = getDB();
+      return await db
+        .collection(this.collection)
+        .aggregate([
+          {
+            //1. stage 1 get average product price per category
+            $group: { _id: "$cat", averagePrice: { $avg: "$price" } },
+          },
+        ])
+        .toArray();
     } catch (err) {
       console.log(err);
       throw new ApplicationError("something went wrong with the database", 500);
