@@ -51,17 +51,20 @@ export default class ProductRepository {
     }
   }
   //product should have minimum price and specefic category
-  async filter(minPrice, category) {
+  async filter(minPrice, categories) {
     try {
       const db = getDB();
       const collection = db.collection(this.collection);
       let filterExpression = {};
       if (minPrice) {
-         filterExpression.price = { $gte: parseFloat(minPrice) };
+        filterExpression.price = { $gte: parseFloat(minPrice) };
       }
-
-      if (category) {
-         filterExpression = { $and: [{ cat: category }, ] };
+      categories = JSON.parse(categories.replace(/'/g, '"'));
+      console.log("categories :", categories);
+      if (categories) {
+        filterExpression = {
+          $or: [{ cat: { $in: categories } }, filterExpression],
+        };
         // filterExpression.category = category;
       }
       return await collection.find(filterExpression).toArray();
