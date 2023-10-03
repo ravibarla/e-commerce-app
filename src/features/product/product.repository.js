@@ -67,7 +67,10 @@ export default class ProductRepository {
         };
         // filterExpression.category = category;
       }
-      return await collection.find(filterExpression).toArray();
+      return await collection
+        .find(filterExpression)
+        .project({ name: 1, price: 1 ,_id:0,ratings:{$slice:3}})
+        .toArray();
     } catch (err) {
       console.log(err);
       throw new ApplicationError("something went wrong with the database", 500);
