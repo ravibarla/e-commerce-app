@@ -2,3 +2,4 @@ logs.txt
 node_modules
 uploads/
 .env
+./tasks.txt

@@ -1,10 +1,9 @@
-import "./env.js"
+import "./env.js";
 
 //1.import express
 
 import express from "express";
 import swagger from "swagger-ui-express";
-
 
 import productRouter from "./src/features/product/product.routes.js";
 import userRouter from "./src/features/user/user.routes.js";
@@ -18,10 +17,10 @@ import cors from "cors";
 import loggerMiddleware from "./src/middlewares/logger.middleware.js";
 import { ApplicationError } from "./src/error-handler/application.error.js";
 import { connectToMongodb } from "./src/config/mongodb.js";
+import orderRouter from "./src/features/order/order.router.js";
 
 //2. create server
 const server = express();
-
 
 server.use("/api-docs", swagger.serve, swagger.setup(apiDocs));
 server.use(bodyParser.json());
@@ -48,6 +47,7 @@ server.use(cors(corsOptions));
 // server.use("/api/products", basicAuthorizer, productRouter);
 // server.use("/api/products", jwtAuth, productRouter);
 server.use(loggerMiddleware);
+server.use("/api/orders", jwtAuth, orderRouter);
 server.use("/api/products", loggerMiddleware, productRouter);
 server.use("/api/users", userRouter);
 
