@@ -15,6 +15,10 @@ export const connectToMongodb = () => {
     .catch((err) => console.log(err));
 };
 
+export const getClient = () => {
+  return client;
+};
+
 export const getDB = () => {
   return client.db();
 };
