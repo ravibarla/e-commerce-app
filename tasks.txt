@@ -1,0 +1,15 @@
+db.products.aggregate(
+    [
+    //1. create document  for ratings
+    {
+        $unwind:$ratings
+    },
+    //2. group rating per product and get average ratings
+    {
+        $group:{
+            _id:$name,
+            averageRating:{$avg:$ratings.rating}
+        }
+    }
+]
+)

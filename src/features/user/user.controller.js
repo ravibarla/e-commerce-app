@@ -1,22 +1,26 @@
 import { UserModel } from "./user.model.js";
 import jwt from "jsonwebtoken";
+// import UserRepository from "./user.repository_old.js";
+
 import UserRepository from "./user.repository.js";
 import bcrypt from "bcrypt";
 export default class UserController {
   constructor() {
     this.userRepository = new UserRepository();
   }
-  async signUp(req, res) {
+  async signUp(req, res, next) {
     try {
       const { name, email, password, type } = req.body;
-      const hashedPassword = await bcrypt.hash(password, 12);
-      const user = new UserModel(name, email, hashedPassword, type);
+      // const hashedPassword = await bcrypt.hash(password, 12);
+      const user = new UserModel(name, email, password, type);
       await this.userRepository.signUp(user);
       res.status(201).send(user);
     } catch (err) {
-      console.log(err);
-      res.status(200).send(user);
+      // console.log(err);
+      // res.status(200).send("something went wrong in database");
+      next(err);
     }
+    next();
   }
   async signIn(req, res) {
     try {
@@ -44,6 +48,21 @@ export default class UserController {
     } catch (err) {
       console.log(err);
       res.status(200).send("something went wrong ");
+    }
+  }
+
+  async resetPassword(req, res, next) {
+    const { newPassword } = req.body;
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    const userId = req.userId;
+
+    try {
+      await this.userRepository.resetPassword(userId, hashedPassword);
+      res.status(200).send("password is updated successfully");
+    } catch (err) {
+      console.log(err);
+      console.log("something went wrong with database");
+      next();
     }
   }
 }

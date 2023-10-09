@@ -18,6 +18,8 @@ import loggerMiddleware from "./src/middlewares/logger.middleware.js";
 import { ApplicationError } from "./src/error-handler/application.error.js";
 import { connectToMongodb } from "./src/config/mongodb.js";
 import orderRouter from "./src/features/order/order.router.js";
+import { connectUsingMongoose } from "./src/config/mongooseConfig.js";
+import mongoose from "mongoose";
 
 //2. create server
 const server = express();
@@ -65,8 +67,11 @@ server.use((req, res) => {
 
 server.use((err, req, res, next) => {
   console.log(err);
+  if (err instanceof mongoose.Error.ValidationError) {
+    return res.status(400).send(err.message);
+  }
   if (err instanceof ApplicationError) {
-    res.status(err.code).send(err.message);
+    return res.status(err.code).send(err.message);
   }
   //server error
   res.status(503).send("something went wrong please try later");
@@ -81,5 +86,6 @@ server.get("/", (req, res) => {
 const PORT = 3200;
 server.listen(PORT, () => {
   console.log("app running in port ", PORT);
-  connectToMongodb();
+  // connectToMongodb();
+  connectUsingMongoose();
 });
