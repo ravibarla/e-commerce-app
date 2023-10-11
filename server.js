@@ -20,6 +20,7 @@ import { connectToMongodb } from "./src/config/mongodb.js";
 import orderRouter from "./src/features/order/order.router.js";
 import { connectUsingMongoose } from "./src/config/mongooseConfig.js";
 import mongoose from "mongoose";
+import likeRouter from "./src/features/like/like.router.js";
 
 //2. create server
 const server = express();
@@ -54,6 +55,7 @@ server.use("/api/products", loggerMiddleware, productRouter);
 server.use("/api/users", userRouter);
 
 server.use("/api/cartItems", jwtAuth, cartRouter);
+server.use("/api/likes", jwtAuth, likeRouter);
 //middleware to handle 404
 server.use((req, res) => {
   return res

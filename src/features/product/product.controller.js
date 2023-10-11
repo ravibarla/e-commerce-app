@@ -41,10 +41,12 @@ export default class ProductController {
       const productId = req.body.productId;
       const rating = req.body.rating;
       await this.productRepository.rateProduct(userId, productId, rating);
-
       res.status(200).send("rating successfully done");
     } catch (err) {
-      console.log("passing error to middleware");
+      console.error(err); // Log the error for debugging purposes
+      res.status(500).send("Internal Server Error"); // Send an appropriate error response
+
+      // console.log("passing error to middleware");
     }
 
     // const userId = req.query.userId;
